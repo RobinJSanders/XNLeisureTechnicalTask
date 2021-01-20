@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XNLeasureTechnicalTask"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="MainWindow" Height="450" Width="400"
+        DataContext="XNLeisureTechnicalTask.ViewModels.MainWindowViewModel">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -16,12 +18,18 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Margin="10, 10,10,10">
-                <TextBlock Text="Type in any word number or sentence" />
+                <TextBlock Text="Type in any word number or sentence:" />
                 <TextBox />
-                <TextBlock Text="Type the character you want to count" />
+                <TextBlock Text="Type the character you want to count:" />
                 <TextBox  MaxLength="1" />
-                <Button Content="Count"></Button>
-                <TextBlock Text="Result: The there are n intances of 'x' " />
+                <CheckBox Content="Ignore Case" IsChecked="{Binding IgnoreCase, FallbackValue=True}" />
+                <Button Content="Count" x:Name="CountButton"
+                        Command="{Binding CountCommand}" />
+
+                <TextBlock>
+                 <Run Text="Result:" />
+                <Run Text="{Binding CharCountResult}" />
+                </TextBlock>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
@@ -32,8 +40,12 @@
                 <TextBlock Text="Second Number:" />
                 <TextBox />
 
-                <Button Content="ADD" />
-                <TextBlock Text ="Result:" />
+                <Button Content="ADD" x:Name="AddButton"
+                        Command="{Binding AddCommand}" />
+                <TextBlock>
+                <Run Text="Result:" />
+                <Run Text="{Binding CharCountResult}" />
+                </TextBlock>
             </StackPanel>
         </Grid>
     </Grid>
