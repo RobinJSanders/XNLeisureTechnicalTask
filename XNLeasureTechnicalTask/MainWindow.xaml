@@ -1,0 +1,40 @@
+﻿<Window x:Class="XNLeasureTechnicalTask.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XNLeasureTechnicalTask"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Margin="10, 10,10,10">
+                <TextBlock Text="Type in any word number or sentence" />
+                <TextBox />
+                <TextBlock Text="Type the character you want to count" />
+                <TextBox  MaxLength="1" />
+                <Button Content="Count"></Button>
+                <TextBlock Text="Result: The there are n intances of 'x' " />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Margin="10,10,10,10">
+                <TextBlock Text="Type in a number in each text box below" />
+                <TextBlock Text="First Number:" />
+                <TextBox />
+                <TextBlock Text="Second Number:" />
+                <TextBox />
+
+                <Button Content="ADD" />
+                <TextBlock Text ="Result:" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
