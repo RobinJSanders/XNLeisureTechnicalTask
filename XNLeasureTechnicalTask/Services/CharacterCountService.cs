@@ -6,15 +6,17 @@ namespace XNLeasureTechnicalTask.Services
 {
     internal class CharacterCountService : ICharacterCountService
     {
-        public int GetNoOfCharacters(string input, char character, bool ignoreCase = true)
+        public int GetNoOfCharacters(string input, string stringToCount, bool ignoreCase = true)
         {
             if (ignoreCase)
             {
                 input = input.ToLower();
-                character = Char.ToLower(character);
+                stringToCount.ToLower();
             }
 
-            return input.Count(c => (c == character));
+            return input
+                   .Where((item, index) => input.Substring(index).StartsWith(stringToCount))
+                   .Count();
         }
     }
 }

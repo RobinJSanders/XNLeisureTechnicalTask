@@ -2,6 +2,6 @@
 {
     public interface ICharacterCountService
     {
-        int GetNoOfCharacters(string input, char character, bool ignoreCase);
+        int GetNoOfCharacters(string input, string stringToCount, bool ignoreCase);
     }
 }

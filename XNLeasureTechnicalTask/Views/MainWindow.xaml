@@ -1,27 +1,33 @@
-﻿<Window x:Class="XNLeasureTechnicalTask.MainWindow"
+﻿<Window x:Class="XNLeasureTechnicalTask.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XNLeasureTechnicalTask"
+        xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400"
-        DataContext="XNLeisureTechnicalTask.ViewModels.MainWindowViewModel">
+        Title="MainWindow" Height="450" Width="500"
+        DataContext="XNLeisureTechnicalTask.ViewModels.MainWindowViewModel"
+        prism:ViewModelLocator.AutoWireViewModel="True">
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
             <StackPanel Margin="10, 10,10,10">
                 <TextBlock Text="Type in any word number or sentence:" />
-                <TextBox />
-                <TextBlock Text="Type the character you want to count:" />
-                <TextBox  MaxLength="1" />
+                <TextBox Text="{Binding StringInput}" Height="45"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Visible" />
+                <TextBlock Text="Type the character or string you want to count:" />
+                <TextBox   Text="{Binding StringToCount}" />
                 <CheckBox Content="Ignore Case" IsChecked="{Binding IgnoreCase, FallbackValue=True}" />
                 <Button Content="Count" x:Name="CountButton"
                         Command="{Binding CountCommand}" />
@@ -36,15 +42,31 @@
             <StackPanel Margin="10,10,10,10">
                 <TextBlock Text="Type in a number in each text box below" />
                 <TextBlock Text="First Number:" />
-                <TextBox />
+                <TextBox Text="{Binding FirstNumber}" />
                 <TextBlock Text="Second Number:" />
-                <TextBox />
+                <TextBox Text="{Binding SecondNumber}" />
 
                 <Button Content="ADD" x:Name="AddButton"
                         Command="{Binding AddCommand}" />
                 <TextBlock>
                 <Run Text="Result:" />
-                <Run Text="{Binding CharCountResult}" />
+                <Run Text="{Binding SumResult}" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <StackPanel Margin="10,10,10,10">
+                <TextBlock Text="Type in a number in each text box below" />
+                <TextBlock Text="How Many:" />
+                <TextBox Text="{Binding DivideBy}" />
+                <TextBlock Text="In:" />
+                <TextBox Text="{Binding ToDivide}" />
+
+                <Button Content="Divide" x:Name="Divide"
+                        Command="{Binding DivideCommand}" />
+                <TextBlock>
+                <Run Text="Result:" />
+                <Run Text="{Binding DivideResult}" />
                 </TextBlock>
             </StackPanel>
         </Grid>

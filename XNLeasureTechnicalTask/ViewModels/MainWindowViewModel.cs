@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using XNLeasureTechnicalTask.Services.Interfaces;
@@ -6,16 +7,19 @@ using XNLeasureTechnicalTask.ViewModels.Interfaces;
 
 namespace XNLeasureTechnicalTask.ViewModels
 {
-    internal class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
+    public class MainWindowViewModel : ViewModelBase, IMainWindowViewModel
     {
-        private string _stringInput;
-        private char _charToCount;
-        private int _charCount;
-        private bool _ignoreCase;
+        private string _stringInput = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eanean sodales justo et Enim ornare, a congue lacus commodo.";
+        private string _stringToCount = "e";
+        private int _stringCount;
+        private bool? _ignoreCase = true;
         private string _charCountResult;
-        private string _firstNumber;
-        private string _secondNumber;
-        private string _mathResult;
+        private string _firstNumber = "5";
+        private string _secondNumber = "7";
+        private string _sumResult;
+        private string _toDivide = "17272838119191929838299111";
+        private string _divideBy = "1";
+        private string _divideResult;
 
         private readonly IMathService _mathService;
         private readonly ICharacterCountService _characterCountService;
@@ -27,6 +31,7 @@ namespace XNLeasureTechnicalTask.ViewModels
 
             AddCommand = new DelegateCommand(Add);
             CountCommand = new DelegateCommand(Count);
+            DivideCommand = new DelegateCommand(Divide);
         }
 
         #region properties
@@ -41,27 +46,27 @@ namespace XNLeasureTechnicalTask.ViewModels
             }
         }
 
-        public char CharToCount
+        public string StringToCount
         {
-            get { return _charToCount; }
+            get { return _stringToCount; }
             set
             {
-                _charToCount = value;
+                _stringToCount = value;
                 OnPropertyChanged();
             }
         }
 
-        public int CharCount
+        public int StringCount
         {
-            get { return _charCount; }
+            get { return _stringCount; }
             set
             {
-                _charCount = value;
+                _stringCount = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool IgnoreCase
+        public bool? IgnoreCase
         {
             get { return _ignoreCase; }
             set
@@ -101,26 +106,63 @@ namespace XNLeasureTechnicalTask.ViewModels
             }
         }
 
-        public string MathResult
+        public string SumResult
         {
-            get { return _mathResult; }
+            get { return _sumResult; }
             set
             {
-                _mathResult = value;
+                _sumResult = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ToDivide
+        {
+            get { return _toDivide; }
+            set
+            {
+                _toDivide = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DivideBy
+        {
+            get { return _divideBy; }
+            set
+            {
+                _divideBy = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string DivideResult
+        {
+            get { return _divideResult; }
+            set
+            {
+                _divideResult = value;
                 OnPropertyChanged();
             }
         }
 
         public ICommand CountCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        public ICommand DivideCommand { get; set; }
 
         #endregion properties
 
         private void Count()
         {
-            CharCount = _characterCountService.GetNoOfCharacters(StringInput, CharToCount, IgnoreCase);
+            if (StringInput == null || StringToCount == null || IgnoreCase == null)
+            {
+                CharCountResult = "Please type in the textboxes to get a result";
+                return;
+            }
 
-            CharCountResult = $"{CharCount} occurences of {CharToCount}";
+            StringCount = _characterCountService.GetNoOfCharacters(StringInput, StringToCount, (bool)IgnoreCase);
+
+            CharCountResult = $"{StringCount} occurences of '{StringToCount}'";
         }
 
         private void Add()
@@ -129,11 +171,26 @@ namespace XNLeasureTechnicalTask.ViewModels
             double second;
             if (double.TryParse(FirstNumber, out first) == true && double.TryParse(SecondNumber, out second) == true)
             {
-                MathResult = _mathService.AddNumbers(new List<double> { first, second }).ToString();
+                SumResult = _mathService.AddNumbers(new List<double> { first, second }).ToString();
             }
             else
             {
-                MathResult = "Syntax Error";
+                SumResult = "NaN";
+            }
+        }
+
+        private void Divide()
+        {
+            double toDivide;
+            double divideBy;
+            if (double.TryParse(ToDivide, out toDivide) == true && double.TryParse(DivideBy, out divideBy) == true)
+            {
+                DivideResult = _mathService.Divide(toDivide, divideBy)
+                    .ToString();
+            }
+            else
+            {
+                DivideResult = "NaN";
             }
         }
     }

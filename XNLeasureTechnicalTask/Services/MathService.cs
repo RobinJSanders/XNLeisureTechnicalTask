@@ -10,5 +10,10 @@ namespace XNLeasureTechnicalTask.Services
         {
             return numbers.Sum(n => n);
         }
+
+        public double Divide(double toDivide, double divideBy)
+        {
+            return toDivide / divideBy;
+        }
     }
 }
